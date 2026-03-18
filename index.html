@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Ogaloader — Africa's Digital Freight & Commodity Marketplace. Book trucks, buy goods, and track deliveries all in one platform." />
+  <meta name="theme-color" content="#0a4a95" />
+  <title>Ogaloader — Africa's Digital Freight & Commodity Marketplace</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ogaloader — Move Goods. Find Trucks. Grow Markets." />
+  <meta property="og:description" content="One platform connecting cargo owners, truck drivers, and market sellers across Africa." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ════════════════════════════
+     NAVIGATION
+════════════════════════════ -->
+<nav class="nav" id="nav" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+
+      <a href="#" class="nav-logo" aria-label="Ogaloader home">
+        <div class="nav-logo-mark">OG</div>
+        <span class="nav-logo-text">Oga<span>loader</span></span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#for-you">For You</a></li>
+        <li><a href="#marketplace">Marketplace</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="#waitlist" class="btn btn-orange" style="padding: 11px 22px; font-size: 14px;">Get Early Access</a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Nav Drawer -->
+<div class="nav-mobile" id="mobileNav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+  <button class="nav-mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <a href="#how-it-works">How It Works</a>
+  <a href="#features">Features</a>
+  <a href="#for-you">For You</a>
+  <a href="#marketplace">Marketplace</a>
+  <a href="#waitlist" style="color: var(--orange); margin-top: 8px;">Get Early Access →</a>
+</div>
+
+
+<!-- ════════════════════════════
+     HERO
+════════════════════════════ -->
+<section class="hero" id="home" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero-content">
+
+      <!-- Left: Copy -->
+      <div class="hero-text">
+        <div class="hero-badge" aria-label="Now live in Africa">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          Now Building for Africa
+        </div>
+
+        <h1 class="hero-title" id="hero-title">
+          Move Goods.<br>
+          Find Trucks.<br>
+          <span class="line-accent">Grow Markets.</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Ogaloader is the single platform where cargo finds trucks, buyers find sellers,
+          and every delivery is tracked and paid for securely. Built for Africa.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#waitlist" class="btn btn-orange">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            Get Early Access
+          </a>
+          <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-value">3 in 1</div>
+            <div class="stat-label">Buy · Book · Track</div>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <div class="stat-value">Live GPS</div>
+            <div class="stat-label">Real-time delivery tracking</div>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <div class="stat-value">0 Brokers</div>
+            <div class="stat-label">Direct connections only</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Visual Card -->
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-card-stack">
+
+          <!-- Main tracking card -->
+          <div class="hero-card hero-card-main">
+            <div class="hc-header">
+              <span class="hc-tag">Live Delivery</span>
+              <span class="hc-status">
+                <span class="hc-status-dot"></span>
+                In Transit
+              </span>
+            </div>
+
+            <div class="hc-route">
+              <div class="hc-route-row">
+                <span class="hc-route-icon origin"></span>
+                <span class="hc-route-text">Apapa Port, Lagos</span>
+              </div>
+              <div class="hc-route-line"></div>
+              <div class="hc-route-row">
+                <span class="hc-route-icon dest"></span>
+                <span class="hc-route-text">Kano Central Market</span>
+              </div>
+            </div>
+
+            <div class="hc-info-row">
+              <div class="hc-info-item">
+                <div class="hc-info-label">Cargo</div>
+                <div class="hc-info-value">Rice · 20 tons</div>
+              </div>
+              <div class="hc-info-item">
+                <div class="hc-info-label">ETA</div>
+                <div class="hc-info-value" style="color: #4ade80;">6h 20m</div>
+              </div>
+            </div>
+
+            <div class="hc-progress">
+              <div class="hc-progress-label">
+                <span>Pickup</span>
+                <span style="color: #4ade80;">65% complete</span>
+                <span>Delivered</span>
+              </div>
+              <div class="hc-progress-bar">
+                <div class="hc-progress-fill"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two mini cards -->
+          <div class="hero-card-row">
+            <div class="hero-card hc-mini">
+              <div class="hc-mini-icon blue">🏪</div>
+              <div class="hc-mini-title">Buy Goods</div>
+              <div class="hc-mini-sub">Verified sellers across bulk categories</div>
+            </div>
+            <div class="hero-card hc-mini">
+              <div class="hc-mini-icon orange">🚛</div>
+              <div class="hc-mini-title">Book Trucks</div>
+              <div class="hc-mini-sub">Matched by location, cargo and size</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════
+     TRUST BAR
+════════════════════════════ -->
+<div class="trust-bar" aria-label="Platform highlights">
+  <div class="container">
+    <div class="trust-bar-inner">
+
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Secure Wallet Payments
+      </div>
+
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Live GPS Tracking
+      </div>
+
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Direct. No Middlemen.
+      </div>
+
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 4v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Vetted Truck Drivers
+      </div>
+
+      <div class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Pan-Africa Vision
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════
+     PROBLEM
+════════════════════════════ -->
+<section class="problem" id="problem" aria-labelledby="problem-title">
+  <div class="container">
+
+    <div class="problem-header">
+      <div class="section-label">The Problem</div>
+      <h2 class="section-title" id="problem-title">
+        African Logistics is <span class="highlight-orange">Broken</span>
+      </h2>
+      <p class="section-subtitle">
+        Across Africa, logistics runs on phone calls, guesswork, and middlemen.
+        Goods are delayed. Trucks sit idle. Sellers can't grow. We're here to change that.
+      </p>
+    </div>
+
+    <div class="problem-grid">
+
+      <div class="problem-card reveal">
+        <div class="problem-icon">🔍</div>
+        <div class="problem-num">Problem 01</div>
+        <h3>Trucks Are Hard to Find</h3>
+        <p>Businesses spend days making phone calls to find an available truck. Every hour lost is production delayed and money wasted.</p>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-icon">🚛</div>
+        <div class="problem-num">Problem 02</div>
+        <h3>Trucks Travel Empty</h3>
+        <p>Trucks complete a delivery and return empty, burning fuel with nothing to show. Unmatched capacity that costs everyone more.</p>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-icon">🏚️</div>
+        <div class="problem-num">Problem 03</div>
+        <h3>Sellers Stuck in Local Markets</h3>
+        <p>Physical market traders are invisible outside their street. No digital presence means no growth beyond whoever walks past their stall.</p>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-icon">📍</div>
+        <div class="problem-num">Problem 04</div>
+        <h3>Zero Delivery Visibility</h3>
+        <p>Once goods leave, no one knows where they are. Calls. Waiting. Guessing. A broken chain of trust.</p>
+      </div>
+
+      <div class="problem-card reveal reveal-delay-4">
+        <div class="problem-icon">🤝</div>
+        <div class="problem-num">Problem 05</div>
+        <h3>Middlemen Eat Your Margin</h3>
+        <p>Transport brokers sit in the middle of every deal, adding markup without adding value. The buyer pays more. The driver earns less. Nobody wins.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════
+     HOW IT WORKS
+════════════════════════════ -->
+<section class="solution" id="how-it-works" aria-labelledby="solution-title">
+  <div class="container solution-inner">
+
+    <div class="solution-header">
+      <div class="section-label" style="color: var(--orange-light);">How It Works</div>
+      <h2 class="section-title" id="solution-title">
+        One Platform.<br>
+        <span style="color: var(--orange);">Endless Possibilities.</span>
+      </h2>
+      <p class="section-subtitle" style="color: rgba(255,255,255,0.5);">
+        From finding a truck to completing payment on delivery,
+        Ogaloader handles the full journey in four seamless steps.
+      </p>
+    </div>
+
+    <div class="how-steps">
+
+      <div class="step-card reveal">
+        <div class="step-num">1</div>
+        <h3>Open &amp; Choose</h3>
+        <p>Open the platform and choose what you need: request a truck for transport, or browse the product marketplace to buy goods directly.</p>
+        <span class="step-accent blue">Freight or Goods</span>
+      </div>
+
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">2</div>
+        <h3>Match Instantly</h3>
+        <p>Enter your cargo details, pickup, and destination. Our system instantly surfaces matched trucks or verified sellers nearby.</p>
+        <span class="step-accent orange">Smart Matching</span>
+      </div>
+
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">3</div>
+        <h3>Track Live</h3>
+        <p>Watch your goods move in real time. Your driver's location is always visible from pickup to delivery.</p>
+        <span class="step-accent green">Live GPS</span>
+      </div>
+
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">4</div>
+        <h3>Pay Securely</h3>
+        <p>Payment is held safely in escrow and released only after confirmed delivery. Both parties are protected. No disputes, no delays.</p>
+        <span class="step-accent purple">Escrow Wallet</span>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════
+     FEATURES
+════════════════════════════ -->
+<section class="features" id="features" aria-labelledby="features-title">
+  <div class="container">
+
+    <div class="features-header">
+      <div>
+        <div class="section-label">Platform Features</div>
+        <h2 class="section-title" id="features-title">
+          Everything You Need,<br><span class="highlight">Nothing You Don't</span>
+        </h2>
+      </div>
+      <p class="section-subtitle">
+        Purpose-built for the real challenges of moving goods in Africa. Not adapted from somewhere else. Designed from scratch, for here.
+      </p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap blue">🚛</div>
+        <h3>Instant Truck Booking</h3>
+        <p>Request any truck size for any cargo type and get matched with a verified driver within minutes. No phone calls. No brokers. No back-and-forth.</p>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon-wrap green">📍</div>
+        <h3>Live GPS Tracking</h3>
+        <p>Know exactly where your goods are at all times. Share tracking links with your buyers or team in one tap.</p>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon-wrap orange">💳</div>
+        <h3>Digital Wallet &amp; Escrow</h3>
+        <p>Fund your wallet, pay for deliveries and products securely. Payments are held and released only upon confirmed delivery.</p>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon-wrap purple">🏪</div>
+        <h3>Seller Marketplace</h3>
+        <p>List your bulk products with descriptions, prices, and location. Reach thousands of buyers beyond your local market.</p>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-4">
+        <div class="feature-icon-wrap teal">🚗</div>
+        <h3>Fleet Owner Dashboard</h3>
+        <p>Own multiple trucks? Manage your entire fleet, monitor earnings, and assign jobs to drivers from one dashboard.</p>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-5">
+        <div class="feature-icon-wrap red">⭐</div>
+        <h3>Ratings &amp; Trust System</h3>
+        <p>Rate every transaction. Transparent reviews build accountability and help users make confident decisions every time.</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════
+     WHO IT'S FOR
+════════════════════════════ -->
+<section class="users" id="for-you" aria-labelledby="users-title">
+  <div class="container">
+
+    <div class="users-header">
+      <div class="section-label">Who It's For</div>
+      <h2 class="section-title" id="users-title">
+        Built for <span class="highlight">Every Player</span><br>in the Supply Chain
+      </h2>
+      <p class="section-subtitle">
+        Whether you move goods, own trucks, drive them, or sell products, Ogaloader was built with your specific needs in mind.
+      </p>
+    </div>
+
+    <div class="users-grid">
+
+      <!-- Cargo Owners -->
+      <div class="user-card user-card-light reveal">
+        <div class="user-card-accent"></div>
+        <span class="user-emoji">🏭</span>
+        <h3>Cargo Owners &amp; Buyers</h3>
+        <p>Manufacturers, farmers, builders, importers. Anyone who needs to move or buy goods at scale, reliably and without the usual friction.</p>
+        <ul class="user-perks">
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Find trucks in minutes, not days
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Order goods directly from verified sellers
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Track every delivery live, end-to-end
+          </li>
+        </ul>
+      </div>
+
+      <!-- Truck Drivers -->
+      <div class="user-card user-card-dark reveal reveal-delay-1">
+        <div class="user-card-accent"></div>
+        <span class="user-emoji">🚛</span>
+        <h3 style="color: white;">Truck Drivers</h3>
+        <p>Stop waiting on calls from brokers. Jobs come directly to you with clear pricing, no hidden cuts, and no surprises at the end of the trip.</p>
+        <ul class="user-perks">
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            More jobs, less waiting time
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Transparent, fair pay on every trip
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Return-trip cargo matches to avoid empty runs
+          </li>
+        </ul>
+      </div>
+
+      <!-- Truck Owners -->
+      <div class="user-card user-card-dark reveal reveal-delay-2">
+        <div class="user-card-accent"></div>
+        <span class="user-emoji">🔑</span>
+        <h3 style="color: white;">Truck &amp; Fleet Owners</h3>
+        <p>Register your trucks, assign drivers, and track earnings across your entire fleet. Everything managed from one dashboard on your phone.</p>
+        <ul class="user-perks">
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Maximize truck utilization and income
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Fleet dashboard for multi-truck owners
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Automated payments and trip records
+          </li>
+        </ul>
+      </div>
+
+      <!-- Market Sellers -->
+      <div class="user-card user-card-light reveal reveal-delay-3">
+        <div class="user-card-accent"></div>
+        <span class="user-emoji">🏪</span>
+        <h3>Market Sellers &amp; Traders</h3>
+        <p>Cement dealers, farm produce traders, timber sellers. List your products once and reach buyers across the country who are ready to order.</p>
+        <ul class="user-perks">
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Sell beyond your local market
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Delivery automatically arranged at checkout
+          </li>
+          <li class="user-perk">
+            <span class="user-perk-check">✓</span>
+            Secure payment before goods leave
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════
+     MARKETPLACE
+════════════════════════════ -->
+<section class="marketplace" id="marketplace" aria-labelledby="marketplace-title">
+  <div class="container">
+    <div class="marketplace-inner">
+
+      <!-- Categories Grid -->
+      <div>
+        <div class="marketplace-categories">
+
+          <div class="cat-card reveal">
+            <span class="cat-emoji">🧱</span>
+            <div>
+              <div class="cat-name">Building Materials</div>
+              <div class="cat-sub">Cement, Granite, Sand, Blocks</div>
+            </div>
+          </div>
+
+          <div class="cat-card reveal reveal-delay-1">
+            <span class="cat-emoji">🌾</span>
+            <div>
+              <div class="cat-name">Agricultural Produce</div>
+              <div class="cat-sub">Rice, Maize, Beans, Palm oil</div>
+            </div>
+          </div>
+
+          <div class="cat-card reveal reveal-delay-2">
+            <span class="cat-emoji">⚙️</span>
+            <div>
+              <div class="cat-name">Industrial Goods</div>
+              <div class="cat-sub">Raw materials, Factory supplies</div>
+            </div>
+          </div>
+
+          <div class="cat-card reveal reveal-delay-3">
+            <span class="cat-emoji">🌲</span>
+            <div>
+              <div class="cat-name">Timber &amp; Wood</div>
+              <div class="cat-sub">Planks, Logs, Hardwood</div>
+            </div>
+          </div>
+
+          <div class="cat-card reveal reveal-delay-4">
+            <span class="cat-emoji">🛢️</span>
+            <div>
+              <div class="cat-name">Petroleum Products</div>
+              <div class="cat-sub">Bitumen, Industrial fuel</div>
+            </div>
+          </div>
+
+          <div class="cat-card reveal reveal-delay-5">
+            <span class="cat-emoji">🚢</span>
+            <div>
+              <div class="cat-name">Import &amp; Export</div>
+              <div class="cat-sub">Port clearing, Haulage</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Text Side -->
+      <div class="marketplace-text reveal">
+        <div class="section-label">The Marketplace</div>
+        <h2 class="section-title" id="marketplace-title">
+          Buy, Book &amp; Deliver.<br>
+          <span class="highlight">One Flow.</span>
+        </h2>
+        <p class="section-subtitle">
+          Find verified sellers for bulk goods across Nigeria. Order what you need
+          and a truck is automatically arranged. No separate calls. No separate apps.
+        </p>
+
+        <!-- Use Case -->
+        <div class="use-case">
+          <div class="use-case-title">Real Use Case — Lagos Builder</div>
+          <div class="use-case-flow">
+            <div class="uc-step">
+              <span class="uc-step-num">1</span>
+              <span>Builder in Lagos needs <strong>granite from Abeokuta</strong></span>
+            </div>
+            <div class="uc-step">
+              <span class="uc-step-num">2</span>
+              <span>Opens Ogaloader → finds <strong>verified granite seller</strong></span>
+            </div>
+            <div class="uc-step">
+              <span class="uc-step-num">3</span>
+              <span>Orders product → <strong>truck automatically booked</strong></span>
+            </div>
+            <div class="uc-step">
+              <span class="uc-step-num">4</span>
+              <span>Tracks delivery live → <strong>pays on arrival</strong></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════
+     CTA / WAITLIST
+════════════════════════════ -->
+<section class="cta-section" id="waitlist" aria-labelledby="cta-title">
+  <div class="container">
+    <div class="cta-inner">
+
+      <div class="section-label" style="justify-content: center; color: var(--orange-light);">
+        Join the Movement
+      </div>
+
+      <h2 class="section-title" id="cta-title">
+        Be Among the First to<br>
+        <span style="color: var(--orange);">Move Smarter</span>
+      </h2>
+
+      <p class="section-subtitle">
+        Ogaloader is launching soon. Join the waitlist and be among the first to experience
+        a smarter way to move goods across Africa.
+      </p>
+
+      <form class="cta-form reveal" id="ctaForm" novalidate>
+        <input
+          class="cta-input"
+          type="email"
+          id="ctaInput"
+          placeholder="Enter your email address"
+          autocomplete="email"
+          required
+          aria-label="Email address for early access"
+        />
+        <button class="btn btn-orange" type="submit" id="ctaBtn">
+          Get Early Access
+        </button>
+      </form>
+
+      <p class="cta-note reveal">No spam. No credit card required. Just early access.</p>
+
+      <div class="cta-users reveal reveal-delay-1">
+        <p class="cta-users-text">
+          For cargo owners, drivers, fleet operators and market sellers across Nigeria.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════
+     FOOTER
+════════════════════════════ -->
+<footer class="footer" aria-label="Site footer">
+  <div class="container">
+
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <a href="#" class="nav-logo" aria-label="Ogaloader home">
+          <div class="nav-logo-mark">OG</div>
+          <span class="nav-logo-text">Oga<span>loader</span></span>
+        </a>
+        <p>
+          Africa's Digital Freight &amp; Commodity Marketplace.
+          Connecting trucks, cargo, buyers, and sellers in one smart ecosystem.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#features">Features</a>
+        <a href="#marketplace">Marketplace</a>
+        <a href="#for-you">For Drivers</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Contact</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        © 2025 Ogaloader. All rights reserved.
+      </p>
+      <div class="footer-links">
+        <a href="#">Twitter / X</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+      <div class="footer-badge">🌍 Built for Africa</div>
+    </div>
+
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
