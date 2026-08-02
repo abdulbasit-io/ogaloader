@@ -24,13 +24,7 @@ export function WaitlistCTA() {
           
           <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF5500]/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#0038A8]/10 rounded-full blur-3xl pointer-events-none" />
-
           <div className="max-w-2xl mx-auto space-y-6 relative z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#16A34A]/10 border border-[#16A34A]/20 text-[#16A34A] text-xs font-semibold uppercase tracking-wider">
-              <ShieldCheck className="w-4 h-4" />
-              Priority Allocation Onboarding
-            </div>
-
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white">
               Get Early Access to the Ogaloader Suite
             </h2>

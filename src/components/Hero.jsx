@@ -14,11 +14,7 @@ export function Hero() {
           
           {/* Left Hero Content */}
           <div className="lg:col-span-7 space-y-6 text-left">
-            {/* Fact Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-blue-950/60 border border-[#0038A8]/40 text-[#60A5FA] text-xs font-semibold uppercase tracking-wider">
-              <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse" />
-              Verified Bulk Commodity & Freight Logistics Platform
-            </div>
+
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.12]">
