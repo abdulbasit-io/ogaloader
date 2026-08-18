@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Calculator, ArrowRight, ShieldCheck, Info } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 export function MarketplacePreview() {
+  const { navigateTo, switchRole } = useApp();
   const [selectedCommodity, setSelectedCommodity] = useState('cement');
   const [tonnage, setTonnage] = useState(30);
   const [route, setRoute] = useState('lagos-ibadan');
@@ -185,13 +187,16 @@ export function MarketplacePreview() {
             </div>
 
             <div className="pt-6">
-              <a
-                href="#waitlist"
+              <button
+                onClick={() => {
+                  switchRole('buyer');
+                  navigateTo('marketplace');
+                }}
                 className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-[#0038A8] hover:bg-[#002B85] text-white text-base font-bold transition-all shadow-lg shadow-[#0038A8]/25"
               >
-                Request Order Allocation
+                Launch Marketplace App
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </button>
             </div>
 
           </div>

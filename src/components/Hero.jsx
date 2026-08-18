@@ -1,7 +1,10 @@
 import React from 'react';
 import { ArrowRight, ShieldCheck, MapPin, Truck, Package, Clock, CheckCircle2 } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 export function Hero() {
+  const { navigateTo, switchRole } = useApp();
+
   return (
     <section className="relative pt-32 pb-20 md:pt-36 md:pb-24 overflow-hidden bg-gradient-to-b from-[#0B0E14] via-[#0D1322] to-[#0B0E14]">
       {/* Dynamic Background Pattern */}
@@ -25,27 +28,30 @@ export function Hero() {
               <span className="text-[#FF5500] block mt-1">Track to Site.</span>
             </h1>
 
-            {/* Evidence-backed Subtitle */}
+            {/* Direct Plain English Subtitle */}
             <p className="text-slate-300 text-lg sm:text-xl font-normal leading-relaxed max-w-2xl">
-              Ogaloader integrates bulk material procurement directly with verified axle-load truck matching, 
-              escrow-secured payments, and live GPS transit telemetry.
+              Buy building materials directly from suppliers, hire trusted trucks nearby, 
+              and make safe payments when your goods arrive on site.
             </p>
 
             {/* Call to Actions */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-              <a
-                href="#waitlist"
+              <button
+                onClick={() => {
+                  switchRole('buyer');
+                  navigateTo('marketplace');
+                }}
                 className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#FF5500] hover:bg-[#E04B00] text-white text-base font-bold transition-all shadow-lg shadow-[#FF5500]/25 hover:shadow-xl hover:shadow-[#FF5500]/35 hover:-translate-y-0.5"
               >
-                Get Early Access
+                Launch App
                 <ArrowRight className="w-5 h-5" />
-              </a>
+              </button>
 
               <a
                 href="#how-it-works"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 text-base font-semibold transition-all"
               >
-                See Operational Workflow
+                How It Works
               </a>
             </div>
 

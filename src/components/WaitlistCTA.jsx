@@ -104,7 +104,7 @@ export function WaitlistCTA() {
                 </div>
 
                 <div className="text-xs text-slate-500 pt-2">
-                  🔒 Zero spam policy. We perform NIN/CAC verification during account activation.
+                  Zero spam policy. We perform NIN/CAC verification during account activation.
                 </div>
               </form>
             )}
