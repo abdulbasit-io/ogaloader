@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Package, Plus, ShieldCheck, Check, X, RefreshCw, MapPin, DollarSign, MessageSquare, CheckCircle2, ArrowRight, CornerDownRight } from 'lucide-react';
+import { Package, Plus, ShieldCheck, Check, X, RefreshCw, MapPin, DollarSign, MessageSquare, CheckCircle2, ArrowRight, CornerDownRight, CreditCard } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export function SellerYardView() {
-  const { products, setProducts, negotiations, respondNegotiation, counterNegotiation } = useApp();
+  const { products, setProducts, negotiations, respondNegotiation, counterNegotiation, navigateTo } = useApp();
   const [showAddModal, setShowAddModal] = useState(false);
   
   // Listing Form State
@@ -13,7 +13,7 @@ export function SellerYardView() {
   const [unit, setUnit] = useState('50kg Bag');
   const [stock, setStock] = useState(15000);
   const [location, setLocation] = useState('Ewekoro Quarry Depot, Ogun State');
-  const [selectedImage, setSelectedImage] = useState('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80');
+  const [selectedImage, setSelectedImage] = useState('/images/cement_bags.png');
   const [customImageUrl, setCustomImageUrl] = useState('');
   const [addedSuccess, setAddedSuccess] = useState(false);
 
@@ -23,12 +23,12 @@ export function SellerYardView() {
   const [sellerNote, setSellerNote] = useState('');
 
   const imagePresets = [
-    { label: 'Bulk Cement', url: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80' },
-    { label: 'Sharp Sand', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80' },
-    { label: 'Granite Stones', url: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=800&q=80' },
-    { label: 'Steel Rebar', url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80' },
-    { label: 'Yellow Maize', url: 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&w=800&q=80' },
-    { label: 'Stone Dust', url: 'https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?auto=format&fit=crop&w=800&q=80' },
+    { label: 'Bulk Cement', url: '/images/cement_bags.png' },
+    { label: 'Sharp Sand', url: '/images/sharp_sand.png' },
+    { label: 'Granite Stones', url: '/images/granite_stones.png' },
+    { label: 'Steel Rebar', url: '/images/steel_rebar.png' },
+    { label: 'Yellow Maize', url: '/images/yellow_maize.png' },
+    { label: 'Stone Dust', url: '/images/stone_dust.png' },
   ];
 
   const handleAddProduct = (e) => {
@@ -77,10 +77,19 @@ export function SellerYardView() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h1 className="text-3xl font-extrabold">Seller Goods & Price Management</h1>
-            <p className="text-slate-400 text-xs mt-1">Set your material prices, manage your yard goods, and respond to buyer price offers.</p>
+            <p className="text-slate-400 text-xs mt-1">Set your material prices, manage your yard goods, and track buyer payments & payouts.</p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-right">
+              <div className="text-[10px] text-slate-400 font-bold uppercase">Pending Escrow Payout</div>
+              <div className="text-lg font-extrabold text-amber-400">₦1,418,400</div>
+            </div>
+            <div className="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-right">
+              <div className="text-[10px] text-slate-400 font-bold uppercase">Disbursed to Zenith Bank</div>
+              <div className="text-lg font-extrabold text-emerald-400">₦2,424,085</div>
+            </div>
+
             <button
               onClick={() => setShowAddModal(true)}
               className="px-5 py-3 rounded-xl bg-[#0038A8] hover:bg-blue-900 text-white text-xs font-bold flex items-center gap-2 shadow-md transition-all"
@@ -92,6 +101,87 @@ export function SellerYardView() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
+
+        {/* Embedded Sales & Bank Payout Ledger */}
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-3">
+            <div>
+              <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-[#0038A8]" />
+                Quarry Gate Sales & Payout Ledger
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">Track money made per order and automatic bank payouts (Zenith Bank ****3391).</p>
+            </div>
+
+            <button
+              onClick={() => navigateTo('transactions')}
+              className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+            >
+              View Full Payment Page <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-100 text-slate-700 uppercase text-[10px] font-extrabold">
+                <tr>
+                  <th className="p-3">Order ID</th>
+                  <th className="p-3">Date</th>
+                  <th className="p-3">Commodity Item</th>
+                  <th className="p-3">Buyer Company</th>
+                  <th className="p-3">Gross Sales</th>
+                  <th className="p-3">Fee (1.5%)</th>
+                  <th className="p-3">Net Earnings</th>
+                  <th className="p-3">Payout Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-800 font-medium">
+                <tr>
+                  <td className="p-3 font-mono font-bold text-[#0038A8]">#OG-892401</td>
+                  <td className="p-3 text-slate-500 font-normal">Aug 18, 2026</td>
+                  <td className="p-3 font-bold">Elephant Bulk Cement (300 Bags)</td>
+                  <td className="p-3">Julius Berger Site Ops</td>
+                  <td className="p-3 font-bold">₦1,440,000</td>
+                  <td className="p-3 text-slate-400">₦21,600</td>
+                  <td className="p-3 font-extrabold text-emerald-700 text-sm">₦1,418,400</td>
+                  <td className="p-3">
+                    <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">
+                      In Escrow (Awaiting POD)
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-mono font-bold text-[#0038A8]">#OG-772109</td>
+                  <td className="p-3 text-slate-500 font-normal">Aug 14, 2026</td>
+                  <td className="p-3 font-bold">3/4 Granite Stones (30 Tons)</td>
+                  <td className="p-3">Dapo Construction Ltd</td>
+                  <td className="p-3 font-bold">₦546,000</td>
+                  <td className="p-3 text-slate-400">₦8,190</td>
+                  <td className="p-3 font-extrabold text-emerald-700 text-sm">₦537,810</td>
+                  <td className="p-3">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      Sent to Zenith Bank (****3391)
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-mono font-bold text-[#0038A8]">#OG-551902</td>
+                  <td className="p-3 text-slate-500 font-normal">Aug 02, 2026</td>
+                  <td className="p-3 font-bold">Stone Dust Aggregate (50 Tons)</td>
+                  <td className="p-3">Lekki Paving Blocks Ltd</td>
+                  <td className="p-3 font-bold">₦475,000</td>
+                  <td className="p-3 text-slate-400">₦7,125</td>
+                  <td className="p-3 font-extrabold text-emerald-700 text-sm">₦467,875</td>
+                  <td className="p-3">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      Sent to Zenith Bank (****3391)
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         
         {/* Pending Buyer Counter Offers Section */}
         <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-sm">

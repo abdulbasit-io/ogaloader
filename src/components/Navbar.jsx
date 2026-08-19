@@ -172,34 +172,80 @@ export function Navbar() {
 
                   {/* SELLER NAVIGATION */}
                   {userRole === 'seller' && (
-                    <div className="group relative flex items-center">
-                      <button
-                        onClick={() => navigateTo('marketplace')}
-                        className="p-2.5 rounded-full bg-amber-600 text-white shadow-md ring-2 ring-amber-400/30"
-                        aria-label="Seller Sales & Goods"
-                      >
-                        <Package className="w-4 h-4" />
-                      </button>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 px-3 py-1 bg-[#0B0E14] text-white text-xs font-extrabold rounded-xl border border-slate-700 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
-                        Seller Sales & Goods
+                    <>
+                      <div className="group relative flex items-center">
+                        <button
+                          onClick={() => navigateTo('marketplace')}
+                          className={`p-2.5 rounded-full transition-all ${
+                            currentView === 'marketplace'
+                              ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400/30'
+                              : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                          }`}
+                          aria-label="Seller Sales & Goods"
+                        >
+                          <Package className="w-4 h-4" />
+                        </button>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 px-3 py-1 bg-[#0B0E14] text-white text-xs font-extrabold rounded-xl border border-slate-700 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
+                          Seller Sales & Goods
+                        </div>
                       </div>
-                    </div>
+
+                      <div className="group relative flex items-center">
+                        <button
+                          onClick={() => navigateTo('transactions')}
+                          className={`p-2.5 rounded-full transition-all ${
+                            currentView === 'transactions'
+                              ? 'bg-amber-600 text-white shadow-md ring-2 ring-amber-400/30'
+                              : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                          }`}
+                          aria-label="Sales Payments & Payouts"
+                        >
+                          <CreditCard className="w-4 h-4" />
+                        </button>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 px-3 py-1 bg-[#0B0E14] text-white text-xs font-extrabold rounded-xl border border-slate-700 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
+                          Sales Payments & Payouts
+                        </div>
+                      </div>
+                    </>
                   )}
 
                   {/* TRUCKER NAVIGATION */}
                   {userRole === 'trucker' && (
-                    <div className="group relative flex items-center">
-                      <button
-                        onClick={() => navigateTo('logistics')}
-                        className="p-2.5 rounded-full bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/30"
-                        aria-label="Driver Trips & Earnings"
-                      >
-                        <Truck className="w-4 h-4" />
-                      </button>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 px-3 py-1 bg-[#0B0E14] text-white text-xs font-extrabold rounded-xl border border-slate-700 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
-                        Driver Trips & Earnings
+                    <>
+                      <div className="group relative flex items-center">
+                        <button
+                          onClick={() => navigateTo('logistics')}
+                          className={`p-2.5 rounded-full transition-all ${
+                            currentView === 'logistics'
+                              ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/30'
+                              : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                          }`}
+                          aria-label="Driver Trips & Earnings"
+                        >
+                          <Truck className="w-4 h-4" />
+                        </button>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 px-3 py-1 bg-[#0B0E14] text-white text-xs font-extrabold rounded-xl border border-slate-700 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
+                          Driver Trips & Earnings
+                        </div>
                       </div>
-                    </div>
+
+                      <div className="group relative flex items-center">
+                        <button
+                          onClick={() => navigateTo('transactions')}
+                          className={`p-2.5 rounded-full transition-all ${
+                            currentView === 'transactions'
+                              ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400/30'
+                              : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+                          }`}
+                          aria-label="Freight Earnings & Wallet"
+                        >
+                          <CreditCard className="w-4 h-4" />
+                        </button>
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 px-3 py-1 bg-[#0B0E14] text-white text-xs font-extrabold rounded-xl border border-slate-700 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none whitespace-nowrap z-50">
+                          Freight Earnings & Wallet
+                        </div>
+                      </div>
+                    </>
                   )}
 
                 </div>

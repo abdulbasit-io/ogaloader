@@ -39,52 +39,52 @@ function AppContent() {
     setActiveModal(null);
   };
 
+  const renderMainContent = () => {
+    if (currentView === 'landing') {
+      return (
+        <>
+          <Hero />
+          <TrustBar />
+          <ProblemSolution />
+          <HowItWorks />
+          <MarketplacePreview />
+          <Features />
+          <UserPersonas />
+          <WaitlistCTA />
+        </>
+      );
+    }
+
+    if (currentView === 'transactions') {
+      return <EscrowView />;
+    }
+
+    if (userRole === 'seller' || currentView === 'seller_portal') {
+      return <SellerYardView />;
+    }
+
+    if (userRole === 'trucker' || currentView === 'trucker_portal') {
+      return <TruckerDispatchView />;
+    }
+
+    if (currentView === 'logistics') {
+      return <LogisticsView onOpenNegotiation={handleOpenNegotiation} />;
+    }
+
+    return (
+      <CommodityMarketplace
+        onOpenProductDetail={handleOpenProductDetail}
+        onOpenNegotiation={handleOpenNegotiation}
+      />
+    );
+  };
+
   return (
     <div className="min-h-screen bg-[#0B0E14] text-slate-100 selection:bg-[#FF5500] selection:text-white">
       <Navbar />
 
       <main>
-        {/* Dynamic Route Switching */}
-        {currentView === 'landing' && (
-          <>
-            <Hero />
-            <TrustBar />
-            <ProblemSolution />
-            <HowItWorks />
-            <MarketplacePreview />
-            <Features />
-            <UserPersonas />
-            <WaitlistCTA />
-          </>
-        )}
-
-        {/* Commodity Marketplace Homepage */}
-        {currentView === 'marketplace' && userRole === 'buyer' && (
-          <CommodityMarketplace
-            onOpenProductDetail={handleOpenProductDetail}
-            onOpenNegotiation={handleOpenNegotiation}
-          />
-        )}
-
-        {/* Logistics & Freight Matcher */}
-        {currentView === 'logistics' && userRole === 'buyer' && (
-          <LogisticsView onOpenNegotiation={handleOpenNegotiation} />
-        )}
-
-        {/* Escrow & Transactions Center */}
-        {currentView === 'transactions' && userRole === 'buyer' && (
-          <EscrowView />
-        )}
-
-        {/* Seller Role Portal Override */}
-        {userRole === 'seller' && currentView !== 'landing' && (
-          <SellerYardView />
-        )}
-
-        {/* Trucker Role Portal Override */}
-        {userRole === 'trucker' && currentView !== 'landing' && (
-          <TruckerDispatchView />
-        )}
+        {renderMainContent()}
       </main>
 
       <Footer />

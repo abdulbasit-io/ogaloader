@@ -17,28 +17,28 @@ export function LogisticsView({ onOpenNegotiation }) {
       estWeight: '30 Tons',
       estVolume: '22 m³',
       recommendedTruck: '30T Heavy Tipper / Box Trailer',
-      image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=600&q=80',
+      image: '/images/cement_bags.png',
     },
     sand: {
       title: 'Dredged Sharp Sand',
       estWeight: '20 Tons',
       estVolume: '15 m³',
       recommendedTruck: '20T Tri-Axle Tipper',
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80',
+      image: '/images/sharp_sand.png',
     },
     granite: {
       title: 'Crushed Granite (3/4 Inch)',
       estWeight: '30 Tons',
       estVolume: '18 m³',
       recommendedTruck: '30T Tipper Truck',
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80',
+      image: '/images/granite_stones.png',
     },
     rebar: {
       title: 'High-Yield Steel Rebar Bundles (16mm)',
       estWeight: '15 Tons',
       estVolume: '10 m³',
       recommendedTruck: '15T Extended Flatbed Trailer',
-      image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80',
+      image: '/images/steel_rebar.png',
     },
   };
 

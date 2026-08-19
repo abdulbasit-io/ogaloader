@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Truck, MapPin, Navigation, ShieldCheck, CheckCircle2, QrCode, Zap, RefreshCw, DollarSign, Wallet, Check, X, CornerDownRight } from 'lucide-react';
+import { Truck, MapPin, Navigation, ShieldCheck, CheckCircle2, QrCode, Zap, RefreshCw, DollarSign, Wallet, Check, X, CornerDownRight, CreditCard } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export function TruckerDispatchView() {
-  const { truckers, truckerState, updateTruckerLocation, negotiations, respondNegotiation, counterNegotiation } = useApp();
+  const { truckers, truckerState, updateTruckerLocation, negotiations, respondNegotiation, counterNegotiation, navigateTo } = useApp();
   const driver = truckers[0]; // Musa Ibrahim (Logged in trucker)
 
   const [currentLoc, setCurrentLoc] = useState(truckerState.currentLocation);
   const [activeRoute, setActiveRoute] = useState(truckerState.activeRoute);
   const [isBackhaul, setIsBackhaul] = useState(truckerState.isBackhaulEnabled);
   const [locationUpdated, setLocationUpdated] = useState(false);
+  const [payoutRequested, setPayoutRequested] = useState(false);
 
   // Freight Counter-Bid Form State
   const [counteringId, setCounteringId] = useState(null);
@@ -21,6 +22,11 @@ export function TruckerDispatchView() {
     updateTruckerLocation(currentLoc, activeRoute, isBackhaul);
     setLocationUpdated(true);
     setTimeout(() => setLocationUpdated(false), 2000);
+  };
+
+  const handleRequestPayout = () => {
+    setPayoutRequested(true);
+    setTimeout(() => setPayoutRequested(false), 3000);
   };
 
   const handleSendTruckerCounter = (id) => {
@@ -40,20 +46,110 @@ export function TruckerDispatchView() {
           <div>
             <h1 className="text-3xl font-extrabold">{driver.driverName} Driver Dashboard</h1>
             <p className="text-slate-400 text-xs mt-1">
-              Truck Spec: <span className="text-slate-200 font-bold">{driver.truckType}</span> ({driver.plateNumber})
+              Truck Spec: <span className="text-slate-200 font-bold">{driver.truckType}</span> ({driver.plateNumber}) • Total Trips: <span className="text-emerald-400 font-bold">12 Hauls</span>
             </p>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-4">
             <div className="bg-slate-900 border border-slate-800 p-3 rounded-2xl text-right">
               <div className="text-[10px] text-slate-400 font-bold uppercase">Driver Wallet Balance</div>
               <div className="text-xl font-extrabold text-emerald-400">₦345,000</div>
             </div>
+
+            <button
+              onClick={handleRequestPayout}
+              className="px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-md transition-all"
+            >
+              <Wallet className="w-4 h-4" /> Withdraw to Bank
+            </button>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
+
+        {payoutRequested && (
+          <div className="p-4 bg-emerald-50 border border-emerald-300 text-emerald-950 text-xs font-bold rounded-2xl shadow-sm text-center animate-in fade-in">
+            ✓ Instant Withdrawal Processed! ₦345,000 sent to First Bank (****4419). Funds available in 3 minutes.
+          </div>
+        )}
+
+        {/* Embedded Driver Trip Revenue & Payout Ledger */}
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-3">
+            <div>
+              <h2 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-[#0038A8]" />
+                Driver Trip Revenue & Payout Ledger
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5">Track earnings per trip, site delivery scans, and instant driver wallet payouts.</p>
+            </div>
+
+            <button
+              onClick={() => navigateTo('transactions')}
+              className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all"
+            >
+              View Full Payment Page <Check className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-slate-100 text-slate-700 uppercase text-[10px] font-extrabold">
+                <tr>
+                  <th className="p-3">Trip ID</th>
+                  <th className="p-3">Date</th>
+                  <th className="p-3">Route Corridor</th>
+                  <th className="p-3">Payload Delivered</th>
+                  <th className="p-3">Client / Buyer</th>
+                  <th className="p-3">Freight Earnings</th>
+                  <th className="p-3">Wallet Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-slate-800 font-medium">
+                <tr>
+                  <td className="p-3 font-mono font-bold text-[#0038A8]">#TRK-992-01A</td>
+                  <td className="p-3 text-slate-500 font-normal">Aug 18, 2026</td>
+                  <td className="p-3 font-bold">Ewekoro Yard → Lekki Phase 1 (65km)</td>
+                  <td className="p-3">30-Ton Bulk Cement</td>
+                  <td className="p-3 text-slate-600">Julius Berger Site Ops</td>
+                  <td className="p-3 font-extrabold text-emerald-700 text-sm">₦117,000</td>
+                  <td className="p-3">
+                    <span className="px-2.5 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold">
+                      En-Route (POD Pending)
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-mono font-bold text-[#0038A8]">#TRK-881-04B</td>
+                  <td className="p-3 text-slate-500 font-normal">Aug 14, 2026</td>
+                  <td className="p-3 font-bold">Abeokuta Quarry → Ibadan Hub (72km)</td>
+                  <td className="p-3">30-Ton Granite Aggregate</td>
+                  <td className="p-3 text-slate-600">Dapo Construction Ltd</td>
+                  <td className="p-3 font-extrabold text-emerald-700 text-sm">₦145,000</td>
+                  <td className="p-3">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      Scanned & Wallet Credited
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="p-3 font-mono font-bold text-[#0038A8]">#TRK-774-09C</td>
+                  <td className="p-3 text-slate-500 font-normal">Aug 09, 2026</td>
+                  <td className="p-3 font-bold">Apapa Port → Sagamu Interchange (80km)</td>
+                  <td className="p-3">15-Ton Steel Rebar</td>
+                  <td className="p-3 text-slate-600">Hitech Construction Co.</td>
+                  <td className="p-3 font-extrabold text-emerald-700 text-sm">₦83,000</td>
+                  <td className="p-3">
+                    <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      Scanned & Wallet Credited
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
         
         {/* DRIVER LOCATION & ROUTE CORRIDOR UPDATER */}
         <div className="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-sm">
