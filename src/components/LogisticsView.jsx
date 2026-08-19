@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Truck, Camera, MapPin, Navigation, ShieldCheck, CheckCircle2, ArrowRight, Zap, RefreshCw, Star, Info, Sliders, ChevronDown } from 'lucide-react';
+import { Truck, Camera, MapPin, Navigation, ShieldCheck, CheckCircle2, ArrowRight, Zap, RefreshCw, Star, Info, Sliders, ChevronDown, Upload, Image, X, Check } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export function LogisticsView({ onOpenNegotiation }) {
@@ -9,6 +9,12 @@ export function LogisticsView({ onOpenNegotiation }) {
   const [destination, setDestination] = useState(activeOrder?.destination || 'Site B4, Lekki Phase 1, Lagos');
   const [cargoPreset, setCargoPreset] = useState('cement');
   const [selectedTrucker, setSelectedTrucker] = useState(truckers[0]);
+
+  // Modal & Upload States
+  const [showSnapModal, setShowSnapModal] = useState(false);
+  const [activeTab, setActiveTab] = useState('upload'); // 'upload' | 'snap' | 'preset'
+  const [customImagePreview, setCustomImagePreview] = useState(null);
+  const [isScanning, setIsScanning] = useState(false);
 
   // AI Cargo Estimation Presets
   const cargoPresets = {
@@ -47,10 +53,38 @@ export function LogisticsView({ onOpenNegotiation }) {
     const data = cargoPresets[key];
     setSnapLoad({
       imageUrl: data.image,
+      title: data.title,
       estWeight: data.estWeight,
       estVolume: data.estVolume,
       recommendedTruck: data.recommendedTruck,
     });
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCustomImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleConfirmCustomUpload = () => {
+    if (!customImagePreview) return;
+    setIsScanning(true);
+    setSnapLoad({
+      imageUrl: customImagePreview,
+      title: 'Custom Cargo Photo',
+      estWeight: '25 Tons',
+      estVolume: '18 m³',
+      recommendedTruck: '25T Tri-Axle Heavy Tipper',
+    });
+    setTimeout(() => {
+      setIsScanning(false);
+      setShowSnapModal(false);
+    }, 1000);
   };
 
   const handleBookTrucker = (trucker) => {
@@ -87,10 +121,10 @@ export function LogisticsView({ onOpenNegotiation }) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
         
-        {/* Step 1: AI Snap Your Load Estimator */}
+        {/* Step 1: AI Snap Your Load Estimator (Compressed Action Bar) */}
         <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
           
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
               <div className="flex items-center gap-2">
                 <span className="w-7 h-7 rounded-full bg-[#0038A8] text-white font-extrabold text-xs flex items-center justify-center">
@@ -101,42 +135,22 @@ export function LogisticsView({ onOpenNegotiation }) {
                 </h2>
               </div>
               <p className="text-slate-500 text-xs mt-1">
-                Upload or select a cargo photo to estimate axle payload, volume, and exact vehicle specification.
+                Snap or upload a cargo photo to estimate axle payload weight, volume, and exact vehicle specification.
               </p>
             </div>
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 text-purple-700 text-xs font-bold border border-purple-200">
-              <Zap className="w-4 h-4 text-purple-600" />
-              Computer Vision Axle Estimation Active
-            </div>
-          </div>
+            <div className="flex items-center gap-3">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-50 text-purple-700 text-xs font-bold border border-purple-200">
+                <Zap className="w-4 h-4 text-purple-600" />
+                Computer Vision Axle Active
+              </div>
 
-          {/* AI Preset Buttons */}
-          <div className="space-y-3">
-            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-              Select Sample Cargo Photo or Upload:
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              {Object.keys(cargoPresets).map((key) => (
-                <button
-                  key={key}
-                  onClick={() => handleSelectPreset(key)}
-                  className={`p-3 rounded-2xl border text-left transition-all space-y-2 ${
-                    cargoPreset === key
-                      ? 'bg-blue-50/80 border-[#0038A8] ring-2 ring-[#0038A8]/20'
-                      : 'bg-slate-50 border-slate-200 hover:border-slate-300'
-                  }`}
-                >
-                  <img
-                    src={cargoPresets[key].image}
-                    alt={cargoPresets[key].title}
-                    className="w-full h-24 object-cover rounded-xl"
-                  />
-                  <div className="text-xs font-bold text-slate-900 line-clamp-1">
-                    {cargoPresets[key].title}
-                  </div>
-                </button>
-              ))}
+              <button
+                onClick={() => setShowSnapModal(true)}
+                className="px-5 py-3 rounded-xl bg-[#0038A8] hover:bg-blue-900 text-white text-xs font-bold flex items-center gap-2 shadow-md transition-all"
+              >
+                <Camera className="w-4 h-4" /> Snap / Upload Cargo Photo
+              </button>
             </div>
           </div>
 
@@ -144,53 +158,219 @@ export function LogisticsView({ onOpenNegotiation }) {
           <div className="bg-slate-900 text-white p-6 rounded-2xl grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
             <div className="md:col-span-4 h-40 rounded-xl overflow-hidden relative border border-slate-700">
               <img
-                src={cargoPresets[cargoPreset].image}
+                src={snapLoad?.imageUrl || cargoPresets[cargoPreset].image}
                 alt="Selected Cargo"
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-blue-500/20 backdrop-blur-[1px] flex items-center justify-center">
                 <span className="px-3 py-1 bg-black/80 rounded-full text-[10px] font-mono text-emerald-400 border border-emerald-500/50">
-                  AI SCAN COMPLETED
+                  {isScanning ? 'AI SCANNING CARGO...' : 'AI SCAN COMPLETED'}
                 </span>
               </div>
             </div>
 
             <div className="md:col-span-8 space-y-3 text-xs">
-              <div className="text-slate-400 font-bold uppercase tracking-wider">
-                AI Load Analysis Metrics:
+              <div className="flex items-center justify-between text-slate-400 font-bold uppercase tracking-wider">
+                <span>AI Load Analysis Metrics:</span>
+                <span className="text-[#FF5500] text-[11px] normal-case font-bold">
+                  Cargo: {snapLoad?.title || cargoPresets[cargoPreset].title}
+                </span>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                 <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
                   <div className="text-slate-400 text-[10px]">ESTIMATED PAYLOAD WEIGHT:</div>
                   <div className="text-lg font-extrabold text-white mt-1">
-                    {cargoPresets[cargoPreset].estWeight}
+                    {snapLoad?.estWeight || cargoPresets[cargoPreset].estWeight}
                   </div>
                 </div>
 
                 <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
                   <div className="text-slate-400 text-[10px]">ESTIMATED CUBIC VOLUME:</div>
                   <div className="text-lg font-extrabold text-blue-400 mt-1">
-                    {cargoPresets[cargoPreset].estVolume}
+                    {snapLoad?.estVolume || cargoPresets[cargoPreset].estVolume}
                   </div>
                 </div>
 
                 <div className="col-span-2 sm:col-span-1 bg-slate-800/80 p-3 rounded-xl border border-slate-700">
                   <div className="text-slate-400 text-[10px]">RECOMMENDED TRUCK SPEC:</div>
                   <div className="text-xs font-bold text-orange-400 mt-1">
-                    {cargoPresets[cargoPreset].recommendedTruck}
+                    {snapLoad?.recommendedTruck || cargoPresets[cargoPreset].recommendedTruck}
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2 text-slate-300 pt-1">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Compliant with Federal Road Safety Corps (FRSC) axle load regulations.</span>
+              <div className="flex items-center justify-between pt-1">
+                <div className="flex items-center gap-2 text-slate-300">
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                  <span>Compliant with Federal Road Safety Corps (FRSC) axle load regulations.</span>
+                </div>
+
+                <button
+                  onClick={() => setShowSnapModal(true)}
+                  className="text-xs font-bold text-blue-400 hover:text-blue-300 underline flex items-center gap-1"
+                >
+                  <Camera className="w-3.5 h-3.5" /> Change Cargo Photo
+                </button>
               </div>
             </div>
           </div>
 
         </div>
+
+      {/* Snap / Upload Cargo Modal */}
+      {showSnapModal && (
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-2xl w-full p-6 space-y-6 shadow-2xl animate-in zoom-in-95 max-h-[90vh] overflow-y-auto">
+            
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div>
+                <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                  <Camera className="w-5 h-5 text-[#0038A8]" />
+                  Snap or Upload Cargo Photo
+                </h3>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Take a photo directly with your camera, upload from your gallery, or choose a sample preset.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowSnapModal(false)}
+                className="w-8 h-8 rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 flex items-center justify-center"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Modal Tabs */}
+            <div className="flex gap-2 p-1 bg-slate-100 rounded-2xl text-xs font-bold">
+              <button
+                onClick={() => setActiveTab('upload')}
+                className={`flex-1 py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                  activeTab === 'upload' ? 'bg-white text-[#0038A8] shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Upload className="w-4 h-4" /> Upload from Gallery
+              </button>
+              <button
+                onClick={() => setActiveTab('snap')}
+                className={`flex-1 py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                  activeTab === 'snap' ? 'bg-white text-[#0038A8] shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Camera className="w-4 h-4" /> Snap Camera Photo
+              </button>
+              <button
+                onClick={() => setActiveTab('preset')}
+                className={`flex-1 py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 ${
+                  activeTab === 'preset' ? 'bg-white text-[#0038A8] shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Image className="w-4 h-4" /> Sample Presets
+              </button>
+            </div>
+
+            {/* Tab 1: Upload from Gallery */}
+            {activeTab === 'upload' && (
+              <div className="space-y-4">
+                <label className="border-2 border-dashed border-slate-300 hover:border-[#0038A8] bg-slate-50 hover:bg-blue-50/50 rounded-2xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all text-center space-y-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileUpload}
+                  />
+                  <div className="w-12 h-12 rounded-2xl bg-blue-100 text-[#0038A8] flex items-center justify-center">
+                    <Upload className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="text-sm font-bold text-slate-900">Click to upload cargo photo</div>
+                    <div className="text-xs text-slate-500 mt-1">Supports PNG, JPG, WEBP from your phone or device gallery</div>
+                  </div>
+                </label>
+
+                {customImagePreview && (
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-4">
+                    <img src={customImagePreview} alt="Preview" className="w-20 h-20 object-cover rounded-xl border" />
+                    <div className="text-xs space-y-1">
+                      <div className="font-bold text-slate-900">Selected Custom Photo</div>
+                      <div className="text-emerald-600 font-bold">✓ Ready for AI Axle Estimation Scan</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Tab 2: Snap Camera Photo */}
+            {activeTab === 'snap' && (
+              <div className="space-y-4 text-center">
+                <div className="relative bg-slate-900 h-64 rounded-2xl overflow-hidden flex flex-col items-center justify-center text-white border border-slate-800">
+                  {customImagePreview ? (
+                    <img src={customImagePreview} alt="Camera Snap" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="space-y-3 p-4">
+                      <div className="w-14 h-14 rounded-full bg-slate-800 border-2 border-blue-500 flex items-center justify-center mx-auto text-blue-400 animate-pulse">
+                        <Camera className="w-7 h-7" />
+                      </div>
+                      <div className="text-sm font-bold text-slate-200">Camera Viewfinder Ready</div>
+                      <div className="text-xs text-slate-400 max-w-xs mx-auto">
+                        Point your camera at the loaded material pile or truck bed.
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex gap-3">
+                  <label className="flex-1 py-3 bg-[#0038A8] hover:bg-blue-900 text-white rounded-xl font-bold text-xs cursor-pointer flex items-center justify-center gap-2 shadow-md">
+                    <input type="file" accept="image/*" capture="environment" className="hidden" onChange={handleFileUpload} />
+                    <Camera className="w-4 h-4" /> Trigger Shutter Snap
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {/* Tab 3: Sample Presets */}
+            {activeTab === 'preset' && (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {Object.keys(cargoPresets).map((key) => (
+                  <button
+                    key={key}
+                    onClick={() => {
+                      handleSelectPreset(key);
+                      setShowSnapModal(false);
+                    }}
+                    className={`p-3 rounded-2xl border text-left transition-all space-y-2 ${
+                      cargoPreset === key
+                        ? 'bg-blue-50 border-[#0038A8] ring-2 ring-[#0038A8]/20'
+                        : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                    }`}
+                  >
+                    <img
+                      src={cargoPresets[key].image}
+                      alt={cargoPresets[key].title}
+                      className="w-full h-24 object-cover rounded-xl"
+                    />
+                    <div className="text-xs font-bold text-slate-900 line-clamp-1">
+                      {cargoPresets[key].title}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {activeTab !== 'preset' && customImagePreview && (
+              <div className="pt-2">
+                <button
+                  onClick={handleConfirmCustomUpload}
+                  className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md flex items-center justify-center gap-2"
+                >
+                  <Check className="w-4 h-4" /> Confirm Photo & Run AI Scan
+                </button>
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
 
         {/* Step 2: Route & Proximity Distance Matcher */}
         <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">

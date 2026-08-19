@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Package, Plus, ShieldCheck, Check, X, RefreshCw, MapPin, DollarSign, MessageSquare, CheckCircle2, ArrowRight, CornerDownRight, CreditCard } from 'lucide-react';
+import { Package, Plus, ShieldCheck, Check, X, RefreshCw, MapPin, DollarSign, MessageSquare, CheckCircle2, ArrowRight, CornerDownRight, CreditCard, Camera, Upload, Image } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 export function SellerYardView() {
@@ -14,8 +14,21 @@ export function SellerYardView() {
   const [stock, setStock] = useState(15000);
   const [location, setLocation] = useState('Ewekoro Quarry Depot, Ogun State');
   const [selectedImage, setSelectedImage] = useState('/images/cement_bags.png');
-  const [customImageUrl, setCustomImageUrl] = useState('');
+  const [customImagePreview, setCustomImagePreview] = useState(null);
   const [addedSuccess, setAddedSuccess] = useState(false);
+
+  // Image Upload Handler
+  const handleSellerPhotoUpload = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCustomImagePreview(reader.result);
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   // Seller Counter-Bid Form State
   const [counteringId, setCounteringId] = useState(null);
@@ -33,7 +46,7 @@ export function SellerYardView() {
 
   const handleAddProduct = (e) => {
     e.preventDefault();
-    const finalImage = customImageUrl || selectedImage;
+    const finalImage = customImagePreview || selectedImage;
 
     const newProduct = {
       id: `p-${Date.now().toString().slice(-4)}`,
@@ -57,7 +70,7 @@ export function SellerYardView() {
       setAddedSuccess(false);
       setShowAddModal(false);
       setTitle('');
-      setCustomImageUrl('');
+      setCustomImagePreview(null);
     }, 1500);
   };
 
@@ -376,38 +389,72 @@ export function SellerYardView() {
                   />
                 </div>
 
-                {/* IMAGE SELECTOR SECTION */}
-                <div className="space-y-2">
-                  <label className="block text-slate-700 font-bold">Select High-Res Preset Image or Input URL:</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {imagePresets.map((img) => (
-                      <button
-                        key={img.label}
-                        type="button"
-                        onClick={() => {
-                          setSelectedImage(img.url);
-                          setCustomImageUrl('');
-                        }}
-                        className={`p-2 rounded-xl border text-left transition-all space-y-1 ${
-                          selectedImage === img.url && !customImageUrl
-                            ? 'bg-blue-50 border-[#0038A8] ring-2 ring-[#0038A8]/20'
-                            : 'bg-slate-50 border-slate-200'
-                        }`}
-                      >
-                        <img src={img.url} alt={img.label} className="w-full h-14 object-cover rounded-lg" />
-                        <div className="text-[10px] font-bold text-slate-800 text-center line-clamp-1">{img.label}</div>
-                      </button>
-                    ))}
+                {/* NON-TECHNICAL COMMODITY PHOTO UPLOAD & PRESETS */}
+                <div className="space-y-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                  <label className="block text-slate-900 font-bold text-xs">
+                    Commodity Photo (Snap Camera, Upload File, or Select Preset):
+                  </label>
+
+                  {/* Upload & Snap Buttons */}
+                  <div className="grid grid-cols-2 gap-2">
+                    <label className="py-2.5 px-3 rounded-xl bg-white border border-slate-300 hover:border-[#0038A8] text-slate-800 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleSellerPhotoUpload}
+                      />
+                      <Upload className="w-4 h-4 text-[#0038A8]" />
+                      <span>Upload from Gallery</span>
+                    </label>
+
+                    <label className="py-2.5 px-3 rounded-xl bg-white border border-slate-300 hover:border-[#0038A8] text-slate-800 font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        capture="environment"
+                        className="hidden"
+                        onChange={handleSellerPhotoUpload}
+                      />
+                      <Camera className="w-4 h-4 text-[#0038A8]" />
+                      <span>Snap Camera Photo</span>
+                    </label>
                   </div>
 
+                  {/* Selected Preview badge if custom upload */}
+                  {customImagePreview && (
+                    <div className="flex items-center gap-3 p-2 bg-emerald-50 rounded-xl border border-emerald-200 text-xs">
+                      <img src={customImagePreview} alt="Uploaded preview" className="w-12 h-12 object-cover rounded-lg border border-emerald-300" />
+                      <div className="space-y-0.5">
+                        <div className="font-bold text-emerald-900">Custom Photo Attached</div>
+                        <div className="text-[10px] text-emerald-700">✓ Ready to publish to marketplace</div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Preset Images Grid */}
                   <div>
-                    <input
-                      type="url"
-                      placeholder="Or paste custom image URL (https://...)"
-                      value={customImageUrl}
-                      onChange={(e) => setCustomImageUrl(e.target.value)}
-                      className="w-full p-2 rounded-xl border border-slate-300 text-xs font-mono mt-1"
-                    />
+                    <div className="text-[11px] font-bold text-slate-500 mb-1.5 uppercase">Or Select Sample Preset Image:</div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {imagePresets.map((img) => (
+                        <button
+                          key={img.label}
+                          type="button"
+                          onClick={() => {
+                            setSelectedImage(img.url);
+                            setCustomImagePreview(null);
+                          }}
+                          className={`p-1.5 rounded-xl border text-left transition-all space-y-1 ${
+                            selectedImage === img.url && !customImagePreview
+                              ? 'bg-blue-50 border-[#0038A8] ring-2 ring-[#0038A8]/20'
+                              : 'bg-white border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <img src={img.url} alt={img.label} className="w-full h-12 object-cover rounded-lg" />
+                          <div className="text-[10px] font-bold text-slate-800 text-center line-clamp-1">{img.label}</div>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
