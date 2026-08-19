@@ -30,9 +30,11 @@ export function ProductDetailModal({ product, onClose, onOpenNegotiation }) {
       escrowFee: escrowFee,
       grandTotal: grandTotal,
       origin: product.sellerLocation,
-      destination: deliveryDestination,
-      status: 'Escrow Funded',
+      destination: fulfillmentType === 'pickup' ? product.sellerLocation : deliveryDestination,
+      status: fulfillmentType === 'pickup' ? 'Yard Pickup QR Code Ready' : 'Escrow Funded',
       escrowStage: 1,
+      trucker: fulfillmentType === 'pickup' ? null : prev.trucker,
+      trackingCode: fulfillmentType === 'pickup' ? 'PICKUP-QR-9982' : 'TRK-992-01A',
     }));
 
     onClose();
@@ -266,7 +268,11 @@ export function ProductDetailModal({ product, onClose, onOpenNegotiation }) {
             onClick={handleProceedToCheckout}
             className="w-full sm:w-auto px-7 py-3 rounded-xl bg-[#FF5500] hover:bg-[#E04B00] text-white text-sm font-bold flex items-center justify-center gap-2 transition-all shadow-md shadow-[#FF5500]/20"
           >
-            <span>Proceed to Freight & Escrow Lock</span>
+            <span>
+              {fulfillmentType === 'pickup'
+                ? 'Lock Funds & Generate Pickup QR Code'
+                : 'Proceed to Freight & Escrow Lock'}
+            </span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>

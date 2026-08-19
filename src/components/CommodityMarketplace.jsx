@@ -189,7 +189,8 @@ export function CommodityMarketplace({ onOpenProductDetail, onOpenNegotiation })
           {paginatedProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden group hover:-translate-y-1"
+              onClick={() => onOpenProductDetail(product)}
+              className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between overflow-hidden group hover:-translate-y-1 cursor-pointer"
             >
               <div>
                 {/* Image & Category Pill */}
@@ -246,7 +247,7 @@ export function CommodityMarketplace({ onOpenProductDetail, onOpenNegotiation })
               </div>
 
               {/* Price & Actions Footer */}
-              <div className="p-5 bg-slate-50/80 border-t border-slate-100 space-y-3">
+              <div className="p-5 bg-slate-50/80 border-t border-slate-100 space-y-3" onClick={(e) => e.stopPropagation()}>
                 <div className="flex items-baseline justify-between">
                   <div>
                     <span className="text-2xl font-extrabold text-[#0038A8]">
@@ -261,7 +262,10 @@ export function CommodityMarketplace({ onOpenProductDetail, onOpenNegotiation })
 
                 <div className="grid grid-cols-2 gap-2 pt-1">
                   <button
-                    onClick={() => onOpenNegotiation(product)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenNegotiation(product);
+                    }}
                     className="py-2.5 px-3 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold flex items-center justify-center gap-1.5 transition-all"
                   >
                     <MessageSquare className="w-3.5 h-3.5 text-slate-600" />
@@ -269,7 +273,10 @@ export function CommodityMarketplace({ onOpenProductDetail, onOpenNegotiation })
                   </button>
 
                   <button
-                    onClick={() => onOpenProductDetail(product)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onOpenProductDetail(product);
+                    }}
                     className="py-2.5 px-3 rounded-xl bg-[#FF5500] hover:bg-[#E04B00] text-white text-xs font-bold flex items-center justify-center gap-1 transition-all shadow-sm"
                   >
                     Order & Transport

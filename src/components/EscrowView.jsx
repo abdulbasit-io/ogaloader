@@ -213,11 +213,18 @@ export function EscrowView() {
             <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-6">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
                 <div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
                     <span className="px-2.5 py-1 rounded-full bg-blue-100 text-[#0038A8] text-xs font-extrabold">
                       Active Order #{activeOrder.id}
                     </span>
-                    <span className="text-xs text-slate-500 font-medium">Tracking Code: {activeOrder.trackingCode}</span>
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${
+                      activeOrder.fulfillmentType === 'pickup'
+                        ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                        : 'bg-emerald-100 text-emerald-900 border border-emerald-300'
+                    }`}>
+                      {activeOrder.fulfillmentType === 'pickup' ? '📦 Yard Self-Pickup (Free)' : '🚚 Matched Truck Delivery'}
+                    </span>
+                    <span className="text-xs text-slate-500 font-medium">Code: {activeOrder.trackingCode || 'TRK-992-01A'}</span>
                   </div>
                   <h3 className="text-xl font-extrabold text-slate-900 mt-1">{activeOrder.product.title}</h3>
                 </div>
@@ -228,20 +235,29 @@ export function EscrowView() {
                 </div>
               </div>
 
-              {/* 5-STAGE MILESTONE TIMELINE */}
+              {/* DYNAMIC 5-STAGE MILESTONE TIMELINE */}
               <div className="space-y-3">
-                <div className="text-xs font-extrabold text-slate-700 uppercase tracking-wider">
-                  Order Status Steps (Step {currentStage} of 5):
+                <div className="flex items-center justify-between text-xs font-extrabold text-slate-700 uppercase tracking-wider">
+                  <span>Order Status Steps (Step {currentStage} of 5):</span>
+                  <span className="text-blue-600 font-bold normal-case">
+                    Fulfillment: {activeOrder.fulfillmentType === 'pickup' ? 'Quarry Self-Pickup' : 'Ogaloader Truck Delivery'}
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                  {[
+                  {(activeOrder.fulfillmentType === 'pickup' ? [
+                    { stage: 1, title: '1. Money Held Safely', desc: 'Protected in safe escrow hold' },
+                    { stage: 2, title: '2. Pickup QR Code Ready', desc: 'Digital QR generated for driver' },
+                    { stage: 3, title: '3. Yard Scan & Loading', desc: 'Quarry scans QR & loads truck' },
+                    { stage: 4, title: '4. Gate Out Confirmed', desc: 'Self-pickup loading verified' },
+                    { stage: 5, title: '5. Money Released', desc: 'Payout released to supplier' },
+                  ] : [
                     { stage: 1, title: '1. Money Held Safely', desc: 'Protected in safe bank hold' },
-                    { stage: 2, title: '2. Goods Loaded at Yard', desc: 'Loaded and weighed at quarry' },
+                    { stage: 2, title: '2. Goods Loaded at Yard', desc: 'Loaded & weighed at quarry' },
                     { stage: 3, title: '3. Driver on the Way', desc: 'Driver en-route to your site' },
                     { stage: 4, title: '4. Delivery Check at Site', desc: 'Inspecting goods upon arrival' },
                     { stage: 5, title: '5. Money Released', desc: 'Payout sent to seller and driver' },
-                  ].map((st) => (
+                  ]).map((st) => (
                     <div
                       key={st.stage}
                       className={`p-3.5 rounded-2xl border text-xs space-y-1 transition-all ${
@@ -265,13 +281,16 @@ export function EscrowView() {
                 <div className="md:col-span-8 space-y-2">
                   <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-[#0038A8] text-xs font-bold">
                     <QrCode className="w-3.5 h-3.5" />
-                    Delivery QR Code
+                    {activeOrder.fulfillmentType === 'pickup' ? 'Yard Pickup QR Code' : 'Delivery Receipt QR Code'}
                   </div>
                   <h4 className="text-base font-extrabold text-slate-900">
-                    Delivery Receipt Code: <span className="font-mono text-[#0038A8]">#OGA-WAYBILL-9982</span>
+                    {activeOrder.fulfillmentType === 'pickup' ? 'Quarry Gate Loading Code: ' : 'Delivery Receipt Code: '}
+                    <span className="font-mono text-[#0038A8]">{activeOrder.fulfillmentType === 'pickup' ? '#OGA-PICKUP-8819' : '#OGA-WAYBILL-9982'}</span>
                   </h4>
                   <p className="text-xs text-slate-600">
-                    Show this QR code to the driver when your goods arrive at your site. Scanning this confirms receipt and releases payment safely.
+                    {activeOrder.fulfillmentType === 'pickup'
+                      ? 'Show this QR code to the quarry loading bay operator at the seller yard. Scanning this authorizes loading your truck and releases payment safely upon gate exit.'
+                      : 'Show this QR code to the driver when your goods arrive at your site. Scanning this confirms receipt and releases payment safely.'}
                   </p>
                 </div>
 
@@ -280,7 +299,7 @@ export function EscrowView() {
                     onClick={() => setShowQrModal(true)}
                     className="w-full py-3 px-4 rounded-xl bg-[#0038A8] hover:bg-blue-900 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-sm"
                   >
-                    <QrCode className="w-4 h-4" /> Show Waybill QR Code
+                    <QrCode className="w-4 h-4" /> {activeOrder.fulfillmentType === 'pickup' ? 'Show Pickup QR Code' : 'Show Waybill QR Code'}
                   </button>
 
                   <button
@@ -293,7 +312,7 @@ export function EscrowView() {
                     }}
                     className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center justify-center gap-2 shadow-md"
                   >
-                    <CheckCircle2 className="w-4 h-4" /> Sign Receipt & Release Payout
+                    <CheckCircle2 className="w-4 h-4" /> {activeOrder.fulfillmentType === 'pickup' ? 'Confirm Pickup & Release Payout' : 'Sign Receipt & Release Payout'}
                   </button>
                 </div>
               </div>
@@ -309,8 +328,12 @@ export function EscrowView() {
                     <span className="font-bold text-slate-900">₦{activeOrder.commodityTotal?.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Haulage Freight Charge ({activeOrder.trucker?.driverName}):</span>
-                    <span className="font-bold text-slate-900">₦{activeOrder.freightTotal?.toLocaleString()}</span>
+                    <span>
+                      {activeOrder.fulfillmentType === 'pickup' ? 'Haulage Freight Charge (Yard Self-Pickup):' : `Haulage Freight Charge (${activeOrder.trucker?.driverName || 'Matched Driver'}):`}
+                    </span>
+                    <span className="font-bold text-slate-900">
+                      {activeOrder.fulfillmentType === 'pickup' ? '₦0 (Free)' : `₦${activeOrder.freightTotal?.toLocaleString()}`}
+                    </span>
                   </div>
                   <div className="flex justify-between border-b border-slate-100 pb-2">
                     <span>Ogaloader Escrow Protection & GIT Insurance (1.5%):</span>
